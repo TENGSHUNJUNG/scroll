@@ -1,0 +1,26 @@
+.nvb_gptb{
+
+	>.nav-container{
+		background: #333333;
+		z-index: 999;
+		width: 100%;
+		height: 60px;
+	}
+	.li-list{
+		list-style:none;
+		overflow: hidden;
+		padding: 0;
+	}
+
+	.container{
+		max-width: 1200px;
+		height: 60px;
+		margin: 0 auto;
+
+		li{
+			width: 110px;
+			height: 60px;
+		}
+	}
+
+}
