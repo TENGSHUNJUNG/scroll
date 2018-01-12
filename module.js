@@ -10,8 +10,30 @@
 
 
 
-	Module.DEFAULTS = {
 
+	Module.DEFAULTS = {
+		beginShow: false,
+		class: {
+			main: 'nav-container',
+			ul: {
+				li_list: 'li-list container',
+				li: 'li'
+			}
+		},
+		anchors: [
+		$('.dom'),
+		{
+			name: '行程特色', 
+			moveto: 0 || '0px' || $DOM,
+		},
+		],
+		dropOffset: 0 || '0px',
+		fixedClass: 'fixed',
+		position: {
+			start: 0 || '0px',
+			end: 0 || '0px' || false,
+			top: 0 || '0px'
+		}
 	};
 
 
@@ -22,7 +44,24 @@
 
 	Module.prototype.create = function(){
 		var options = this.options
-		this.$nvb_gptb.append('<div class="' + options.class.main + '" ><ul class="' + options.class.ul.li_list + '"><li><a href=""></a></li></ul></div>');
+		var start = this.options.position.start
+		var end = this.options.position.end
+		this.$nvb_gptb.append('<div class="' + options.class.main + '" style=top:' + options.position.top +'><ul class="' + options.class.ul.li_list + '"><li><a  >' + options.anchors[1].name + '</a></li><li><a  >' + options.anchors[2].name + '</a></li><li><a  >' + options.anchors[3].name + '</a></li><li><a  >' + options.anchors[4].name + '</a></li><li><a  >' + options.anchors[5].name + '</a></li><li><a  >' + options.anchors[6].name + '</a></li><li><a  >' + options.anchors[7].name + '</a></li><li><a  >' + options.anchors[8].name + '</a></li></ul></div><div class=content><div class=sec1>'+ options.anchors[1].name +'</div><div class=sec2>'+ options.anchors[2].name +'</div><div class=sec3>'+ options.anchors[3].name +'</div><div class=sec4>'+ options.anchors[4].name +'</div><div class=sec5>'+ options.anchors[5].name +'</div><div class=sec6>'+ options.anchors[6].name +'</div><div class=sec7>'+ options.anchors[7].name +'</div><div class=sec8>'+ options.anchors[8].name +'</div></div>');
+		$('li').click(function(){
+			$(this).addClass('active').siblings().removeClass('active');
+		});
+		if( this.options.beginShow ) {
+			$('.' + options.class.main ).addClass('d-block');
+		} else {
+			  $(window).scroll(function () {
+			    var scrollVal = $(this).scrollTop();
+			    if( scrollVal > start ){
+			    	$('.' + options.class.main ).addClass('fixed').addClass('d-block');
+			    } else {
+			    	$('.' + options.class.main ).removeClass('fixed').removeClass('d-block');			    	
+			    }
+			  });
+		}
 	};
 
 
