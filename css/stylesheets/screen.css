@@ -53,7 +53,7 @@
   margin: 0 auto;
   padding-top: 400px;
 }
-.content .sec1, .content .sec2, .content .sec3, .content .sec4, .content .sec5, .content .sec6, .content .sec7, .content .sec8 {
+.content .sec1, .content .sec2, .content .sec3, .content .sec4, .content .sec5, .content .sec6, .content .sec7, .content .sec0 {
   width: 100%;
   height: 300px;
   background: #CF0F0F;
@@ -75,8 +75,9 @@
 }
 .content .sec7 {
   background: #CC5C17;
+  margin-bottom: 600px;
 }
-.content .sec8 {
+.content .sec0 {
   background: #691908;
 }
 
