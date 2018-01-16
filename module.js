@@ -33,12 +33,11 @@
 
 		htmlStr += '<div class=nav-container style=top:' + options.position.top +'><ul class="li-list container">';
 		for(var i = 0; i < options.anchors.length; i++) {
-			if( ( typeof options.anchors[i].name  === 'string') ) 
+			if(  typeof options.anchors[i].name  === 'string' ) 
 			htmlStr += '<li class=li'+[i]+'><a>' + options.anchors[i].name + '</a></li>';
 		};
 		htmlStr += '</ul></div><div class=content>';
 		for( var i = 0; i < 8; i++){
-			if( ( typeof options.anchors[i].name  === 'string') ) 
 			htmlStr += '<div class=sec'+ [i] +'>行程特色'+ [i] +'</div>';
 		}
 		htmlStr += '</div>';
@@ -56,15 +55,7 @@
 		var options = this.options ;
 		var start = this.options.position.start ;
 		if( this.options.beginShow ) {
-			$('.nav-container').addClass('d-block');
-			$(window).scroll(function () {
-			    var scrollVal = $(this).scrollTop();
-			    if( scrollVal > start ){
-			    	$('.nav-container').addClass( options.fixedClass ).addClass('d-block');
-			    } else {
-			    	$('.nav-container').removeClass( options.fixedClass ).removeClass('d-block');			    	
-			    }
-			  });
+			$('.nav-container').addClass( options.fixedClass ).addClass('d-block');
 		} else {
 			  $(window).scroll(function () {
 			    var scrollVal = $(this).scrollTop();
@@ -82,13 +73,21 @@
 	Module.prototype.onClick = function(){
 		var options = this.options ;
 		var dropOffset = this.options.dropOffset ;
+		var offset = $('.sec1').offset().top;
 		for(var i = 0; i < options.anchors.length; i++) {
-			$('.li' + [i] ).on('click',function(){
+			$('.li' + i ).on('click',function(){
 				var thisLi = $(this).index();
 				var moveto = options.anchors[thisLi].moveto ;
-				$('html, body').animate({
-					scrollTop: (moveto-dropOffset)
-				}, 500);
+				var offset = $('.sec'+ thisLi ).offset().top;
+				if( typeof moveto === 'number' ){
+					$('html, body').animate({
+						scrollTop: (moveto-dropOffset)
+					}, 500);
+				}else{
+					$('html, body').animate({
+						scrollTop: (offset-dropOffset)
+					}, 500);
+				}
 			})
 		};
 	};
@@ -96,15 +95,30 @@
 
 	Module.prototype.scroll = function(){
 		var options = this.options ;
+		var start = this.options.position.start ;
+		var dropOffset = this.options.dropOffset ;
+		var end = this.options.position.end ;
 		$(window).scroll(function(){
 			var scrollVal = $(this).scrollTop();
 			var newArray = options.anchors.filter(function(obj,index,arr){
-				console.log(scrollVal, obj.moveto, arr[index+1])
-				scrollVal
-				obj.moveto
-				arr[index+1]
+				return ( scrollVal - (start-dropOffset) < obj.moveto )
 			});
 			var indexList = options.anchors.indexOf(newArray[0]);
+				$('.li' + indexList).addClass('active').siblings().removeClass('active');
+			if( typeof end === 'number' || typeof end === 'string' || typeof end === 'boolean' ){
+				if( end === false ){
+					parseInt(end);
+					if(scrollVal > end){
+						$('.nav-container').removeClass( options.fixedClass ).removeClass('d-block');	
+					}
+				}else{
+					if(scrollVal > end){
+						$('.nav-container').removeClass( options.fixedClass ).removeClass('d-block');	
+					}
+				}
+			}else{
+				console.log('type error')
+			}
 		});
 	};
 
