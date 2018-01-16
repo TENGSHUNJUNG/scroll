@@ -13,6 +13,54 @@
 	<script src="./module.js"></script>
 </head>
 <body>
-	
+	<div class="nvb_gptb"></div>
+
+
+	<script>
+	$('.nvb_gptb').nvb_gptb({
+		beginShow: false,
+		anchors: [
+		{
+			name: '行程特色',
+			moveto: 400 || '400px' || $(".sec1")
+		},
+		{
+			name: '行程內容',
+			moveto: 700 || '700px' || $(".sec2")
+		},
+		{
+			name: '行程備註',
+			moveto: 1000 || '1000px' || $(".sec3")
+		},
+		{
+			name: '自費活動',
+			moveto: 1300 || '1300px' || $(".sec4")
+		},
+		{
+			name: '活動備註',
+			moveto: 1600 || '1600px' || $(".sec5")
+		},
+		{
+			name: '安全守則',
+			moveto: 1900 || '1900px' || $(".sec6")
+		},
+		{
+			name: '脫隊規則',
+			moveto: 2200 || '2200px' || $(".sec7")
+		},
+		{
+			name: '旅遊資訊',
+			moveto: 2500 || '2500px' || $(".sec8")
+		},
+		],
+		dropOffset: 60 || '60px',
+		fixedClass: 'fixed',
+		position: {
+			start: 300 || '300px',
+			end:  2800 || '2800px' || true, 
+			top: 0 || '0px' 
+	}
+	});
+	</script>
 </body>
 </html>
