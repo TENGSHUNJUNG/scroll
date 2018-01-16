@@ -29,9 +29,6 @@
 
 	Module.prototype.init = function(){
 		var options = this.options ;
-		var start = this.options.position.start ;
-		var end = this.options.position.end ;
-		var dropOffset = this.options.dropOffset ;
 		var htmlStr = "" ;
 
 		htmlStr += '<div class=nav-container style=top:' + options.position.top +'><ul class="li-list container">';
@@ -47,41 +44,17 @@
 		htmlStr += '</div>';
 		this.$nvb_gptb.append(htmlStr);
 
-
-		for(var i = 0; i < options.anchors.length; i++) {
-			$('.li' + [i] ).on('click',function(){
-				var $this = $(this).index();
-				var moveto = options.anchors[$this].moveto ;
-				$('html, body').animate({
-					scrollTop: (moveto-dropOffset)
-				}, 500);
-				$(window).scroll(function(){
-				var scrollVal = $(this).scrollTop();
-				if( scrollVal > 200 ){
-					$('.li' + $this ).addClass('active').siblings().removeClass('active');
-				}else{
-					console.log(scrollVal)
-					console.log(moveto)
-				}
-				})
-			})
-		};
-
-		// for(var i = 0; i < options.anchors.length; i++) {
-		// 	$(window).scroll(function(){	
-		// 	var moveto = options.anchors[i].moveto ;
-	 //     	var scrollVal = $(this).scrollTop();
-	 //     	console.log(moveto)
-		// 	if( scrollVal > moveto ){
-		// 		$('.li' + [i] ).addClass('active');
-		// 	}else{
-		// 		console.log(1);
-		// 	}
-		// });
-		// };
+		this.beginShow();
+		this.scroll();
+		this.onClick();
+	};
 
 
 
+
+	Module.prototype.beginShow = function(){
+		var options = this.options ;
+		var start = this.options.position.start ;
 		if( this.options.beginShow ) {
 			$('.nav-container').addClass('d-block');
 			$(window).scroll(function () {
@@ -102,28 +75,38 @@
 			    }
 			  });
 		}
-		// this.addBottomLine();
 	};
 
 
-	// Module.prototype.addBottomLine = function(){
-	// 	var options = this.options ;
 
-	// 	for(var i = 0; i < options.anchors.length; i++) {
-	// 		$(window).scroll(function(){
-	// 			console.log($(this).index())
-	// 		var $this = $(this).index();	
-	// 		var moveto = options.anchors[$this].moveto ;
-	//      	var scrollVal = $(this).scrollTop();
-	// 		if( scrollVal < moveto ){
-	// 			console.log(0)
-	// 			$('.li' + [i] ).addClass('active');
-	// 		}else{
-	// 			console.log(1);
-	// 		}
-	// 	});
-	// 	};
-	// };
+	Module.prototype.onClick = function(){
+		var options = this.options ;
+		var dropOffset = this.options.dropOffset ;
+		for(var i = 0; i < options.anchors.length; i++) {
+			$('.li' + [i] ).on('click',function(){
+				var thisLi = $(this).index();
+				var moveto = options.anchors[thisLi].moveto ;
+				$('html, body').animate({
+					scrollTop: (moveto-dropOffset)
+				}, 500);
+			})
+		};
+	};
+
+
+	Module.prototype.scroll = function(){
+		var options = this.options ;
+		$(window).scroll(function(){
+			var scrollVal = $(this).scrollTop();
+			var newArray = options.anchors.filter(function(obj,index,arr){
+				console.log(scrollVal, obj.moveto, arr[index+1])
+				scrollVal
+				obj.moveto
+				arr[index+1]
+			});
+			var indexList = options.anchors.indexOf(newArray[0]);
+		});
+	};
 
 
 
