@@ -53,7 +53,7 @@
 
 	Module.prototype.beginShow = function(){
 		var options = this.options ;
-		var start = this.options.position.start ;
+		var start = parseInt(this.options.position.start) ;
 		if( this.options.beginShow ) {
 			$('.nav-container').addClass( options.fixedClass ).addClass('d-block');
 		} else {
@@ -72,7 +72,7 @@
 
 	Module.prototype.onClick = function(){
 		var options = this.options ;
-		var dropOffset = this.options.dropOffset ;
+		var dropOffset = parseInt(this.options.dropOffset) ;
 		var offset = $('.sec1').offset().top;
 		for(var i = 0; i < options.anchors.length; i++) {
 			$('.li' + i ).on('click',function(){
@@ -96,9 +96,9 @@
 
 	Module.prototype.scroll = function(){
 		var options = this.options ;
-		var start = this.options.position.start ;
-		var dropOffset = this.options.dropOffset ;
-		var end = this.options.position.end ;
+		var start = parseInt(this.options.position.start) ;
+		var dropOffset = parseInt(this.options.dropOffset) ;
+		var end = parseInt(this.options.position.end) ;
 		$(window).scroll(function(){
 			var scrollVal = $(this).scrollTop();
 			var newArray = options.anchors.filter(function(obj,index,arr){
