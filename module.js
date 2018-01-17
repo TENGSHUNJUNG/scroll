@@ -93,6 +93,7 @@
 	};
 
 
+
 	Module.prototype.scroll = function(){
 		var options = this.options ;
 		var start = this.options.position.start ;
@@ -101,14 +102,19 @@
 		$(window).scroll(function(){
 			var scrollVal = $(this).scrollTop();
 			var newArray = options.anchors.filter(function(obj,index,arr){
-				return ( scrollVal - (start-dropOffset) < obj.moveto )
+				if( typeof obj.moveto === 'string' ){
+					var newMoveto = parseInt(obj.moveto)
+					return ( scrollVal - (start-dropOffset) < newMoveto)
+				}else{
+					return ( scrollVal - (start-dropOffset) < obj.moveto )
+				}
 			});
 			var indexList = options.anchors.indexOf(newArray[0]);
 				$('.li' + indexList).addClass('active').siblings().removeClass('active');
 			if( typeof end === 'number' || typeof end === 'string' || typeof end === 'boolean' ){
-				if( end === false ){
-					parseInt(end);
-					if(scrollVal > end){
+				if( typeof end === 'string' ){
+					var endNumber = parseInt(end);
+					if(scrollVal > endNumber){
 						$('.nav-container').removeClass( options.fixedClass ).removeClass('d-block');	
 					}
 				}else{
